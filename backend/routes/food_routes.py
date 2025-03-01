@@ -63,3 +63,10 @@ def analyze_image():
     except Exception as e:
         print(f"Error analyzing image: {str(e)}")
         return jsonify({"error": str(e)}), 500
+    
+
+
+@food_routes.route('/capture', methods=['GET'])
+def capture():
+    """Render the food capture page with camera functionality"""
+    return render_template('food_capture.html')

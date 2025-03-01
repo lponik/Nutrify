@@ -119,3 +119,110 @@ button:hover {
     justify-content: center;
     margin: 10px 0;
 }
+
+/* Add these to your existing CSS */
+
+.capture-options {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.option-btn {
+    padding: 10px 20px;
+    margin: 0 10px;
+    background-color: #e0e0e0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.option-btn.active {
+    background-color: #3498db;
+    color: white;
+}
+
+.capture-section {
+    display: none;
+}
+
+.capture-section.active {
+    display: block;
+}
+
+/* Camera specific styles */
+.camera-container {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.camera-container video {
+    width: 100%;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    background-color: #000;
+}
+
+.camera-controls {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.preview-container {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.preview-container img {
+    width: 100%;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
+
+.preview-controls {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+#capture-btn {
+    background-color: #e74c3c;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 50px;
+    font-size: 16px;
+}
+
+#save-result-btn {
+    background-color: #27ae60;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    margin-top: 15px;
+}
+
+#capture-btn {
+    background-color: #e74c3c;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 50px;
+    font-size: 16px;
+}
+
+#save-result-btn {
+    background-color: #27ae60;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    margin-top: 15px;
+}
