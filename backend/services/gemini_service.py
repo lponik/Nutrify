@@ -1,17 +1,74 @@
-import requests
 import os
+import base64
+import google.generativeai as genai
+from PIL import Image
+from io import BytesIO
 
 class GeminiService:
-    def __init__(self):
-        self.api_key = os.getenv('GEMINI_API_KEY')
-        self.api_url = 'https://api.gemini.com/v1/analyze'
-
-    def analyze_food_image(self, image_path):
-        with open(image_path, 'rb') as image_file:
-            files = {'file': image_file}
-            headers = {'Authorization': f'Bearer {self.api_key}'}
-            response = requests.post(self.api_url, headers=headers, files=files)
-            if response.status_code == 200:
-                return response.json()
-            else:
-                response.raise_for_status()
+    def __init__(self, api_key=None):
+        """Initialize the Gemini Service with API key"""
+        self.api_key = api_key or os.environ.get("GEMINI_API_KEY")
+        if not self.api_key:
+            raise ValueError("GEMINI_API_KEY is required")
+        
+        # Configure the Gemini API
+        genai.configure(api_key=self.api_key)
+    
+    def test_api_key(self):
+        """Test if the API key is valid by making a simple request"""
+        try:
+            # List available models as a simple test
+            models = genai.list_models()
+            model_names = [model.name for model in models]
+            print(f"Available models: {model_names}")
+            return True
+        except Exception as e:
+            print(f"API key test failed: {str(e)}")
+            return False
+            
+    def analyze_food_text(self, food_description):
+        """
+        Analyze a text description of food and return nutritional information
+        
+        Args:
+            food_description: Text description of food
+        
+        Returns:
+            dict: Nutritional information extracted from the description
+        """
+        try:
+            # Create a prompt that asks for nutritional analysis
+            prompt = f"""
+            Based on this food description: "{food_description}"
+            
+            Provide detailed nutritional information in JSON format.
+            Include:
+            - Food name
+            - Portion size (standard)
+            - Calories
+            - Macronutrients (protein, carbs, fat)
+            - Key vitamins and minerals
+            - Any potential allergens
+            
+            Format the response as valid JSON only with no other text.
+            """
+            
+            # Use text-only model for this request
+            text_model = genai.GenerativeModel('models/gemini-1.5-pro')
+            
+            # Generate response from Gemini
+            response = text_model.generate_content(prompt)
+            
+            # Extract the response text
+            response_text = response.text
+            
+            return {
+                "success": True,
+                "data": response_text
+            }
+            
+        except Exception as e:
+            return {
+                "success": False,
+                "error": str(e)
+            }

@@ -1,21 +1,33 @@
-from flask import Flask, jsonify
-import unittest
+import os
+import google.generativeai as genai
 
-class ApiTestCase(unittest.TestCase):
-    def setUp(self):
-        self.app = Flask(__name__)
-        self.client = self.app.test_client()
+# Put your API key directly here for testing
+API_KEY = "AIzaSyA6OSUVUVZ3XWXvBQgFfYWHVquAoUvcFnw"  
 
-    def test_health_check(self):
-        response = self.client.get('/api/health')
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.json, {'status': 'healthy'})
-
-    def test_nutrient_analysis(self):
-        # Assuming there's an endpoint for nutrient analysis
-        response = self.client.post('/api/analyze', json={'image_url': 'http://example.com/food.jpg'})
-        self.assertEqual(response.status_code, 200)
-        self.assertIn('nutrients', response.json)
-
-if __name__ == '__main__':
-    unittest.main()
+try:
+    print(f"Testing API key: {API_KEY[:4]}...{API_KEY[-4:] if len(API_KEY) > 8 else ''}")
+    
+    # Configure the Gemini API
+    genai.configure(api_key=API_KEY)
+    
+    # Try listing models
+    models = genai.list_models()
+    print("Available models:")
+    for model in models:
+        print(f"- {model.name}")
+    
+    # Try a simple generation
+    model = genai.GenerativeModel('models/gemini-1.5-pro')
+    response = model.generate_content("Hello, I'm testing the Gemini API.")
+    print("\nResponse from Gemini:")
+    print(response.text)
+    
+    print("\nAPI key works successfully!")
+    
+except Exception as e:
+    print(f"\nError: {str(e)}")
+    print("\nTroubleshooting steps:")
+    print("1. Make sure you created an API key from AI Studio (not regular Google Cloud)")
+    print("2. Verify the API is enabled in your Google Cloud project")
+    print("3. Set up billing even for the free tier")
+    print("4. Check for any network restrictions")

@@ -1,3 +1,4 @@
+ent-tracker/frontend/templates/index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,24 +8,24 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
 </head>
 <body>
-    <header>
-        <h1>Welcome to the Nutrient Tracker</h1>
-        <nav>
-            <ul>
-                <li><a href="{{ url_for('login') }}">Login</a></li>
-                <li><a href="{{ url_for('register') }}">Register</a></li>
-                <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
-            </ul>
-        </nav>
-    </header>
-    <main>
-        <section>
-            <h2>Your Journey to Better Nutrition Starts Here!</h2>
-            <p>Track your nutrients and achieve your health goals with our easy-to-use platform.</p>
-        </section>
-    </main>
-    <footer>
-        <p>&copy; 2023 Nutrient Tracker. All rights reserved.</p>
-    </footer>
+    <div class="container">
+        <h1>Nutrient Analyzer</h1>
+        
+        <div class="analysis-section">
+            <h2>Describe Your Food</h2>
+            <div class="text-input">
+                <textarea id="food-description" placeholder="Describe the food you want to analyze (e.g., 'grilled chicken breast with steamed broccoli')"></textarea>
+                <button id="analyze-btn">Analyze</button>
+            </div>
+        </div>
+        
+        <div class="results-section" id="results-container" style="display: none;">
+            <h2>Nutritional Information</h2>
+            <div id="loading" style="display: none;">Analyzing your food...</div>
+            <div id="results" class="results-content"></div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/food_analysis.js') }}"></script>
 </body>
 </html>
