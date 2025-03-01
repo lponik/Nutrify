@@ -1,4 +1,3 @@
-nutrient-tracker/frontend/templates/dashboard.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,45 +26,86 @@ nutrient-tracker/frontend/templates/dashboard.html -->
         </div>
         
         <div class="dashboard-grid">
+            <!-- Calories Card -->
             <div class="dashboard-card">
                 <h2>Calorie Intake</h2>
+                <div class="editable-nutrition">
+                    <div class="nutrition-input-group">
+                        <label for="calories-consumed">Consumed:</label>
+                        <input type="number" id="calories-consumed" min="0" value="0" class="editable-input">
+                    </div>
+                    <div class="nutrition-input-group">
+                        <label for="calories-goal">Goal:</label>
+                        <input type="number" id="calories-goal" min="0" value="2000" class="editable-input">
+                    </div>
+                </div>
                 <div class="progress-container">
                     <div class="progress-bar" id="calories-progress"></div>
                 </div>
-                <div class="progress-text">
-                    <span id="calories-current">0</span> / <span id="calories-goal">2000</span> kcal
-                </div>
+                <div class="progress-text" id="calories-text">0 / 2000 kcal</div>
             </div>
             
+            <!-- Protein Card -->
             <div class="dashboard-card">
                 <h2>Protein</h2>
+                <div class="editable-nutrition">
+                    <div class="nutrition-input-group">
+                        <label for="protein-consumed">Consumed:</label>
+                        <input type="number" id="protein-consumed" min="0" value="0">
+                    </div>
+                    <div class="nutrition-input-group">
+                        <label for="protein-goal">Goal:</label>
+                        <input type="number" id="protein-goal" min="0" value="50">
+                    </div>
+                </div>
                 <div class="progress-container">
                     <div class="progress-bar" id="protein-progress"></div>
                 </div>
-                <div class="progress-text">
-                    <span id="protein-current">0</span> / <span id="protein-goal">50</span> g
-                </div>
+                <div class="progress-text" id="protein-text">0 / 50 g</div>
             </div>
             
+            <!-- Carbs Card -->
             <div class="dashboard-card">
-                <h2>Carbs</h2>
+                <h2>Carbohydrates</h2>
+                <div class="editable-nutrition">
+                    <div class="nutrition-input-group">
+                        <label for="carbs-consumed">Consumed:</label>
+                        <input type="number" id="carbs-consumed" min="0" value="0">
+                    </div>
+                    <div class="nutrition-input-group">
+                        <label for="carbs-goal">Goal:</label>
+                        <input type="number" id="carbs-goal" min="0" value="250">
+                    </div>
+                </div>
                 <div class="progress-container">
                     <div class="progress-bar" id="carbs-progress"></div>
                 </div>
-                <div class="progress-text">
-                    <span id="carbs-current">0</span> / <span id="carbs-goal">300</span> g
-                </div>
+                <div class="progress-text" id="carbs-text">0 / 250 g</div>
             </div>
             
+            <!-- Fat Card -->
             <div class="dashboard-card">
-                <h2>Fat</h2>
+                <h2>Fats</h2>
+                <div class="editable-nutrition">
+                    <div class="nutrition-input-group">
+                        <label for="fat-consumed">Consumed:</label>
+                        <input type="number" id="fat-consumed" min="0" value="0">
+                    </div>
+                    <div class="nutrition-input-group">
+                        <label for="fat-goal">Goal:</label>
+                        <input type="number" id="fat-goal" min="0" value="70">
+                    </div>
+                </div>
                 <div class="progress-container">
                     <div class="progress-bar" id="fat-progress"></div>
                 </div>
-                <div class="progress-text">
-                    <span id="fat-current">0</span> / <span id="fat-goal">70</span> g
-                </div>
+                <div class="progress-text" id="fat-text">0 / 70 g</div>
             </div>
+        </div>
+        
+        <!-- Save Changes button -->
+        <div class="dashboard-actions">
+            <button id="save-nutrition" class="btn primary">Save Changes</button>
         </div>
         
         <div class="food-log-section">
