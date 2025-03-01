@@ -9,26 +9,26 @@
     margin: 0;
     padding: 0;
 }
-/* Rotating Gradient Background */
+
+/* ---------------------------------
+   ROTATING GRADIENT BACKGROUND
+----------------------------------- */
 body {
     margin: 0;
     padding: 0;
     /* Animated multi-color gradient */
     background: linear-gradient(-45deg, #d8846a, #7bd1f0, #7cf1be, #d5ef87);
-    background-color: black;
     background-size: 400% 400%;
     animation: gradientBG 15s ease infinite;
 
-    /* Keep your other body properties (font, line-height, etc.) */
     color: #333;
     line-height: 1.6;
-    font-family: 'Poppins', sans-serif; /* or your chosen font */
+    font-family: 'Poppins', sans-serif;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
 }
 
-/* Keyframes for the gradient animation */
 @keyframes gradientBG {
     0% {
         background-position: 0% 50%;
@@ -41,19 +41,9 @@ body {
     }
 }
 
-
-
-body {
-    /* Modern gradient background */
-    color: #333;
-    line-height: 1.6;
-    font-family: 'Poppins', sans-serif; /* New, modern font */
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
-
-/* Main Navigation Bar */
+/* ---------------------------------
+   MAIN NAVIGATION BAR
+----------------------------------- */
 .main-nav {
     background-color: #2c3e50;
     color: white;
@@ -104,7 +94,9 @@ body {
     background-color: #3498db;
 }
 
-/* Container for the main content */
+/* ---------------------------------
+   CONTAINER
+----------------------------------- */
 .container {
     max-width: 900px;
     width: 90%;
@@ -116,7 +108,9 @@ body {
     margin-bottom: 40px;
 }
 
-/* Page Title */
+/* ---------------------------------
+   HEADINGS
+----------------------------------- */
 h1 {
     text-align: center;
     margin-bottom: 30px;
@@ -125,14 +119,15 @@ h1 {
     font-weight: 600;
 }
 
-/* Subtitles / Section Titles */
 h2, h3 {
     color: #3498db;
-    margin-bottom: 15px;
+    
     font-weight: 600;
 }
 
-/* Tabs */
+/* ---------------------------------
+   TABS
+----------------------------------- */
 .tabs {
     display: flex;
     margin-bottom: 20px;
@@ -147,23 +142,22 @@ h2, h3 {
     cursor: pointer;
     transition: all 0.3s ease;
     font-size: 1rem;
-    border-radius: 25px; /* Keep only this border-radius */
+    border-radius: 25px; /* Rounded tabs */
     font-weight: 500;
-    /* Remove the flex: 1 to stop tabs from stretching */
-    min-width: 120px; /* Ensure a minimum width */
-    text-align: center; /* Center the text */
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Optional: add subtle shadow */
+    min-width: 120px; 
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
 .tab-btn:hover {
     background-color: #3a5fbe;
-    transform: translateY(-2px); /* Optional: slight lift effect on hover */
+    transform: translateY(-2px);
 }
 
 .tab-btn.active {
     background-color: #28a579;
     color: white;
-    box-shadow: 0 4px 8px rgba(40, 165, 121, 0.3); /* Optional: enhanced shadow for active tab */
+    box-shadow: 0 4px 8px rgba(40, 165, 121, 0.3);
 }
 
 .tab-content {
@@ -174,7 +168,9 @@ h2, h3 {
     display: block;
 }
 
-/* Sections (like analysis, results) */
+/* ---------------------------------
+   SECTIONS (Analysis, Results)
+----------------------------------- */
 .analysis-section, .results-section {
     background-color: #fff;
     border-radius: 8px;
@@ -183,7 +179,6 @@ h2, h3 {
     margin-bottom: 20px;
 }
 
-/* Textarea for input */
 textarea {
     width: 100%;
     height: 100px;
@@ -196,7 +191,9 @@ textarea {
     font-family: 'Poppins', sans-serif;
 }
 
-/* Buttons */
+/* ---------------------------------
+   BUTTONS
+----------------------------------- */
 button, .btn {
     background-color: #3498db;
     color: white;
@@ -218,7 +215,6 @@ button:hover,
     transform: translateY(-1px);
 }
 
-/* Additional button styles (if you have different types) */
 .btn.primary {
     background-color: #4CAF50;
 }
@@ -226,25 +222,60 @@ button:hover,
     background-color: #388E3C;
 }
 
-/* Loading / Error / Results Messages */
+/* ---------------------------------
+   LOADING / ERROR / RESULTS
+----------------------------------- */
 #loading {
+    display: none; /* Hidden by default */
+    width: 100%;
     text-align: center;
-    margin: 20px 0;
+    padding: 30px 0;
+    margin: 10px 0;
+}
+
+#loading.active {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.loader {
+    transform: rotateZ(45deg);
+    perspective: 1000px;
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    color: #3498db;
+    display: block;
+    position: relative;
+    margin: 0 auto 20px;
+}
+
+.loading-text {
+    display: block;
+    width: 100%;
+    margin-top: 10px;
     font-style: italic;
-    color: #7f8c8d;
+    color: #666;
+    text-align: center;
+    font-weight: 500;
 }
 
 .results-content {
     white-space: pre-wrap;
     word-wrap: break-word;
+    margin-top: 15px;
+    /* You can remove the border/background if you're using the nutrition card below */
     border: 1px solid #ddd;
     border-radius: 4px;
-    padding: 15px;
     background-color: #f9f9f9;
-    margin-top: 15px;
+    padding: 15px;
 }
 
-/* Image Input / Preview */
+/* ---------------------------------
+   IMAGE INPUT / PREVIEW
+----------------------------------- */
 .image-input {
     display: flex;
     flex-direction: column;
@@ -260,7 +291,9 @@ button:hover,
     margin: 10px 0;
 }
 
-/* Camera / Capture */
+/* ---------------------------------
+   CAMERA / CAPTURE
+----------------------------------- */
 .capture-options {
     display: flex;
     justify-content: center;
@@ -284,7 +317,6 @@ button:hover,
 .capture-section {
     display: none;
 }
-
 .capture-section.active {
     display: block;
 }
@@ -340,7 +372,9 @@ button:hover,
     margin-top: 15px;
 }
 
-/* Account & Form Styles */
+/* ---------------------------------
+   ACCOUNT & FORM STYLES
+----------------------------------- */
 .account-section {
     margin-bottom: 30px;
 }
@@ -363,7 +397,9 @@ button:hover,
     font-family: 'Poppins', sans-serif;
 }
 
-/* Dashboard */
+/* ---------------------------------
+   DASHBOARD
+----------------------------------- */
 .dashboard-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -467,7 +503,9 @@ button:hover,
     text-align: center;
 }
 
-/* Pop-up Messages */
+/* ---------------------------------
+   POP-UP MESSAGES
+----------------------------------- */
 #message-popup {
     position: fixed;
     bottom: 30px;
@@ -493,7 +531,9 @@ button:hover,
     transform: translateX(-50%) translateY(0);
 }
 
-/* Center the analyze button */
+/* ---------------------------------
+   BUTTON ALIGNMENT
+----------------------------------- */
 .text-input {
     display: flex;
     flex-direction: column;
@@ -502,10 +542,9 @@ button:hover,
 
 #analyze-text-btn {
     margin-top: 15px;
-    min-width: 150px; /* Gives the button a consistent width */
+    min-width: 150px; 
 }
 
-/* Alternative option if you want to create more space around the button */
 .text-button-container {
     display: flex;
     justify-content: center;
@@ -513,7 +552,384 @@ button:hover,
     width: 100%;
 }
 
-/* Responsive Media Queries */
+.upload-section .image-input {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#analyze-upload-btn {
+    margin-top: 15px;
+    min-width: 150px;
+}
+
+.upload-controls {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+    width: 100%;
+}
+
+.analyze-btn {
+    margin-top: 15px;
+    min-width: 150px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* ---------------------------------
+   SPINNER / LOADER ANIMATIONS
+----------------------------------- */
+.loader:before,
+.loader:after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: inherit;
+    height: inherit;
+    border-radius: 50%;
+    transform: rotateX(70deg);
+    animation: 1s spin linear infinite;
+}
+.loader:after {
+    color: #28a579; 
+    transform: rotateY(70deg);
+    animation-delay: .4s;
+}
+
+@keyframes spin {
+    0%, 100% {
+        box-shadow: .2em 0px 0 0px currentcolor;
+    }
+    12% {
+        box-shadow: .2em .2em 0 0 currentcolor;
+    }
+    25% {
+        box-shadow: 0 .2em 0 0px currentcolor;
+    }
+    37% {
+        box-shadow: -.2em .2em 0 0 currentcolor;
+    }
+    50% {
+        box-shadow: -.2em 0 0 0 currentcolor;
+    }
+    62% {
+        box-shadow: -.2em -.2em 0 0 currentcolor;
+    }
+    75% {
+        box-shadow: 0px -.2em 0 0 currentcolor;
+    }
+    87% {
+        box-shadow: .2em -.2em 0 0 currentcolor;
+    }
+}
+
+/* ---------------------------------
+   NUTRITION CARD STYLES
+----------------------------------- */
+.nutrition-card {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 5px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    text-align: center;
+}
+
+.nutrition-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+}
+
+/* Food Name & Portion Size */
+.nutrition-card .food-name {
+    margin-top: 0;
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: #333;/* Reduced from larger value */
+    text-align: center;
+    margin-bottom: 10px !important; /* Reduced from default h1 margin */
+}
+
+.nutrition-card .portion-size {
+    font-style: italic;
+    color: #777;
+    text-align: center;
+    margin-bottom: 5px !important;
+}
+
+/* Calories Section */
+.nutrition-card .calories-section {
+    background: #f0f0f0;
+    border-radius: 6px;
+    padding: 12px 15px; /* Reduced vertical padding */
+    margin: 5px auto 15px; /* Reduced top margin */
+    max-width: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.container {
+    padding: 10px 20px 20px; /* Top, Left-Right, Bottom */
+}
+
+.nutrition-card .calories-label {
+    font-weight: 500;
+    color: #555;
+    margin-bottom: 6px;
+    font-size: 0.9rem;
+}
+
+.nutrition-card .calories-value {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #e74c3c;
+}
+
+.nutrition-card .macro-list,
+.nutrition-card .micro-list {
+     /* vertically centers the content within each row */
+    gap: 15px;
+    margin-bottom: 20px;
+    /* remove background-color or keep it if you want a container background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.nutrition-card .macro-item,
+.nutrition-card .micro-item {
+    background-color: #f0f0f0;
+    border-radius: 6px;
+    padding: 8px 12px;
+    text-align: center;
+    display: inline-flex;
+    
+    display: flex;
+    flex-direction: column; /* Stack label and value vertically */
+    justify-content: center;
+    align-items: center;
+    min-width: 100px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease;
+}
+
+.nutrition-card .macro-item:hover,
+.nutrition-card .micro-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+}
+
+.nutrition-card .macro-item .label,
+.nutrition-card .macro-label,
+.nutrition-card .micro-item .micro-label,
+.nutrition-card .micro-label {
+    font-weight: 500;
+    color: #555;
+    margin-bottom: 6px;
+    font-size: 0.9rem;
+}
+
+.nutrition-card .macro-item .value,
+.nutrition-card .macro-value,
+.nutrition-card .micro-item .micro-value,
+.nutrition-card .micro-value {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: #3498db;
+}
+
+/* Updated micro-item styling for stacked layout */
+.nutrition-card .micro-item {
+    background-color: #f0f0f0;
+    border-radius: 6px;
+    padding: 8px 12px;
+    text-align: center;
+    display: flex;
+    flex-direction: column; /* Stack label and value vertically */
+    justify-content: center;
+    align-items: center;
+    min-width: 100px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+/* Fix class names to match what's used in the JavaScript */
+.nutrition-card .micro-item .micro-label {
+    font-weight: 500;
+    color: #555;
+    margin-bottom: 6px; /* Add space between label and value */
+    font-size: 0.9rem;
+}
+
+.nutrition-card .micro-item .micro-value {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: #3498db;
+}
+
+/* Make sure the micronutrient section is properly structured */
+.nutrition-card .micronutrient-section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.nutrition-card .macro-section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    margin-bottom: 20px;
+}
+/* Potential Allergens */
+.nutrition-card .allergens-section {
+    margin-bottom: 20px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.nutrition-card .allergens-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+    justify-content: center;
+}
+
+.nutrition-card .allergen-item {
+    background-color: #ffecb3;
+    color: #f39c12;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    min-width: 100px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    border: none;
+}
+
+/* Additional Info Section */
+.nutrition-card .additional-info {
+    background-color: #f8f8f8;
+    border-radius: 6px;
+    padding: 15px;
+    margin: 20px auto 0;
+    max-width: 90%;
+    text-align: center;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.nutrition-card .additional-info ul {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0 0;
+}
+
+.nutrition-card .additional-info li {
+    margin-bottom: 8px;
+    color: #555;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 5px 0;
+}
+
+.nutrition-card .additional-info li strong {
+    margin-bottom: 4px;
+    color: #333;
+}
+
+/* Optional: Make the section containers full width too */
+.nutrition-card .macros-section,
+.nutrition-card .micros-section {
+    width: 100%;
+    padding: 0;
+    margin-bottom: 25px;
+}
+
+/* Center micronutrient section content */
+.nutrition-card .micros-section {
+    width: 100%;
+    padding: 0;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Ensure lists inside take full width for proper centering */
+.nutrition-card .micros-section .micro-list {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+/* Updated Macro Section to match Micro Section */
+.nutrition-card .macros-section {
+    width: 100%;
+    padding: 0;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 25px;
+    margin-top: 0; /* Ensure no extra top margin */
+}
+
+.nutrition-card .macro-list {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    margin-top: 5px; /* Reduced space after heading */
+    padding-top: 0; /* Remove any padding that might cause spacing */
+}
+
+/* Ensure card header has minimal spacing */
+.nutrition-card .card-header {
+    margin-bottom: 10px; /* Reduced from larger value */
+    text-align: center;
+}
+
+/* Make spacing consistent across sections */
+.nutrition-card .macros-section,
+.nutrition-card .micros-section,
+.nutrition-card .allergens-section {
+    margin-top: 15px; /* Consistent top margin for sections */
+    margin-bottom: 15px; /* Consistent bottom margin for sections */
+}
+
+/* Remove any extra margins from headings */
+.nutrition-card h2,
+.nutrition-card h3 {
+    margin-top: 0;
+    margin-bottom: 8px; /* Smaller bottom margin */
+}
+
+/* ---------------------------------
+   RESPONSIVE MEDIA QUERIES
+----------------------------------- */
 @media (max-width: 768px) {
     .nav-links li {
         margin-left: 10px;
@@ -526,3 +942,32 @@ button:hover,
         grid-template-columns: 1fr;
     }
 }
+
+
+/* Section Titles (e.g., "Macronutrients", "Vitamins & Minerals") */
+.nutrition-card h3 {
+    margin-top: 0;
+    margin-bottom: 10px; /* Reduced from larger value */
+    color: #3498db;
+    font-size: 1.2rem;
+    font-weight: 600;
+    display: block;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    border-bottom: 2px solid #3498db;
+    width: fit-content;
+    padding: 0 20px 4px;
+}
+
+/* Same fix for micro section for consistency */
+.nutrition-card .micros-section {
+    margin-top: 0;
+}
+
+.nutrition-card .micro-list {
+    margin-top: 5px; /* Reduced space after heading */
+    padding-top: 0;
+}
+
+
