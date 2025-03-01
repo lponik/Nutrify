@@ -1,100 +1,169 @@
+/* ---------------------------------
+  GOOGLE FONT IMPORT (Optional)
+----------------------------------- */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+/* Reset & Base Styles */
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: 'Arial', sans-serif;
 }
-
+/* Rotating Gradient Background */
 body {
-    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+    /* Animated multi-color gradient */
+    background: linear-gradient(-45deg, #d8846a, #7bd1f0, #7cf1be, #d5ef87);
+    background-color: black;
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+
+    /* Keep your other body properties (font, line-height, etc.) */
     color: #333;
     line-height: 1.6;
+    font-family: 'Poppins', sans-serif; /* or your chosen font */
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
+/* Keyframes for the gradient animation */
+@keyframes gradientBG {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+
+
+body {
+    /* Modern gradient background */
+    color: #333;
+    line-height: 1.6;
+    font-family: 'Poppins', sans-serif; /* New, modern font */
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Main Navigation Bar */
+.main-nav {
+    background-color: #2c3e50;
+    color: white;
+    padding: 15px 0;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links li {
+    margin-left: 20px;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.nav-links a:hover {
+    background-color: #34495e;
+}
+
+.nav-links a.active {
+    background-color: #3498db;
+}
+
+/* Container for the main content */
 .container {
-    max-width: 800px;
+    max-width: 900px;
+    width: 90%;
     margin: 0 auto;
     padding: 20px;
+    background-color: #ffffffcc; /* Slight transparency to show gradient behind */
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    margin-bottom: 40px;
 }
 
+/* Page Title */
 h1 {
     text-align: center;
     margin-bottom: 30px;
     color: #2c3e50;
+    font-size: 2rem;
+    font-weight: 600;
 }
 
-h2 {
+/* Subtitles / Section Titles */
+h2, h3 {
     color: #3498db;
     margin-bottom: 15px;
+    font-weight: 600;
 }
 
-.analysis-section, .results-section {
-    background-color: white;
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    margin-bottom: 20px;
-}
-
-textarea {
-    width: 100%;
-    height: 100px;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    resize: vertical;
-    margin-bottom: 10px;
-    font-size: 16px;
-}
-
-button {
-    background-color: #3498db;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s;
-}
-
-button:hover {
-    background-color: #2980b9;
-}
-
-.results-content {
-    white-space: pre-wrap;
-    word-wrap: break-word;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    padding: 15px;
-    background-color: #f9f9f9;
-}
-
-#loading {
-    text-align: center;
-    margin: 20px 0;
-    font-style: italic;
-    color: #7f8c8d;
-}
-
+/* Tabs */
 .tabs {
     display: flex;
     margin-bottom: 20px;
+    gap: 10px; /* Add space between tabs */
+    justify-content: center; /* Center the tabs horizontally */
 }
 
 .tab-btn {
-    flex: 1;
-    padding: 10px;
+    padding: 10px 20px;
     border: none;
-    background-color: #e0e0e0;
+    background-color: #4e4646;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+    border-radius: 25px; /* Keep only this border-radius */
+    font-weight: 500;
+    /* Remove the flex: 1 to stop tabs from stretching */
+    min-width: 120px; /* Ensure a minimum width */
+    text-align: center; /* Center the text */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Optional: add subtle shadow */
+}
+
+.tab-btn:hover {
+    background-color: #3a5fbe;
+    transform: translateY(-2px); /* Optional: slight lift effect on hover */
 }
 
 .tab-btn.active {
-    background-color: #3498db;
+    background-color: #28a579;
     color: white;
+    box-shadow: 0 4px 8px rgba(40, 165, 121, 0.3); /* Optional: enhanced shadow for active tab */
 }
 
 .tab-content {
@@ -105,6 +174,77 @@ button:hover {
     display: block;
 }
 
+/* Sections (like analysis, results) */
+.analysis-section, .results-section {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+/* Textarea for input */
+textarea {
+    width: 100%;
+    height: 100px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    resize: vertical;
+    margin-bottom: 10px;
+    font-size: 16px;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Buttons */
+button, .btn {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    transition: background-color 0.3s, transform 0.2s;
+    font-family: 'Poppins', sans-serif;
+    display: inline-block;
+    text-decoration: none; /* for anchor buttons */
+}
+
+button:hover,
+.btn:hover {
+    background-color: #2980b9;
+    transform: translateY(-1px);
+}
+
+/* Additional button styles (if you have different types) */
+.btn.primary {
+    background-color: #4CAF50;
+}
+.btn.primary:hover {
+    background-color: #388E3C;
+}
+
+/* Loading / Error / Results Messages */
+#loading {
+    text-align: center;
+    margin: 20px 0;
+    font-style: italic;
+    color: #7f8c8d;
+}
+
+.results-content {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    margin-top: 15px;
+}
+
+/* Image Input / Preview */
 .image-input {
     display: flex;
     flex-direction: column;
@@ -120,8 +260,7 @@ button:hover {
     margin: 10px 0;
 }
 
-/* Add these to your existing CSS */
-
+/* Camera / Capture */
 .capture-options {
     display: flex;
     justify-content: center;
@@ -150,7 +289,6 @@ button:hover {
     display: block;
 }
 
-/* Camera specific styles */
 .camera-container {
     width: 100%;
     max-width: 500px;
@@ -169,12 +307,6 @@ button:hover {
     display: flex;
     justify-content: space-between;
     margin-top: 10px;
-}
-
-.preview-container {
-    width: 100%;
-    max-width: 500px;
-    margin: 0 auto;
 }
 
 .preview-container img {
@@ -208,75 +340,7 @@ button:hover {
     margin-top: 15px;
 }
 
-#capture-btn {
-    background-color: #e74c3c;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 50px;
-    font-size: 16px;
-}
-
-#save-result-btn {
-    background-color: #27ae60;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    font-size: 16px;
-    margin-top: 15px;
-}
-
-/* Navigation styles */
-.main-nav {
-    background-color: #2c3e50;
-    color: white;
-    padding: 15px 0;
-    margin-bottom: 30px;
-}
-
-.nav-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.logo {
-    font-size: 24px;
-    font-weight: bold;
-}
-
-.nav-links {
-    display: flex;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-.nav-links li {
-    margin-left: 20px;
-}
-
-.nav-links a {
-    color: white;
-    text-decoration: none;
-    padding: 5px 10px;
-    border-radius: 4px;
-    transition: background-color 0.3s;
-}
-
-.nav-links a:hover {
-    background-color: #34495e;
-}
-
-.nav-links a.active {
-    background-color: #3498db;
-}
-
-/* Account page styles */
+/* Account & Form Styles */
 .account-section {
     margin-bottom: 30px;
 }
@@ -296,9 +360,10 @@ button:hover {
     padding: 8px;
     border: 1px solid #ddd;
     border-radius: 4px;
+    font-family: 'Poppins', sans-serif;
 }
 
-/* Dashboard styles */
+/* Dashboard */
 .dashboard-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -312,6 +377,8 @@ button:hover {
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     padding: 20px;
     transition: transform 0.2s ease;
+    position: relative;
+    z-index: 1; 
 }
 
 .dashboard-card:hover {
@@ -335,14 +402,15 @@ button:hover {
 .nutrition-input-group {
     display: flex;
     align-items: center;
-    margin-bottom: 8px;
-    margin-right: 10px;
+    margin-bottom: 10px;
+    width: 100%;
 }
 
 .nutrition-input-group label {
-    margin-right: 8px;
+    flex: 1;
     font-weight: 500;
-    width: 80px;
+    margin-right: 10px;
+    color: #555;
 }
 
 .nutrition-input-group input {
@@ -399,27 +467,7 @@ button:hover {
     text-align: center;
 }
 
-.btn {
-    display: inline-block;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    font-size: 16px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-    text-decoration: none;
-}
-
-.btn.primary {
-    background-color: #4CAF50;
-    color: white;
-}
-
-.btn.primary:hover {
-    background-color: #388E3C;
-}
-
+/* Pop-up Messages */
 #message-popup {
     position: fixed;
     bottom: 30px;
@@ -433,6 +481,11 @@ button:hover {
     opacity: 0;
     transition: opacity 0.3s ease, transform 0.3s ease;
     z-index: 1000;
+    pointer-events: none;
+}
+
+#message-popup.error {
+    background-color: #F44336;
 }
 
 #message-popup.show {
@@ -440,133 +493,36 @@ button:hover {
     transform: translateX(-50%) translateY(0);
 }
 
+/* Center the analyze button */
+.text-input {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#analyze-text-btn {
+    margin-top: 15px;
+    min-width: 150px; /* Gives the button a consistent width */
+}
+
+/* Alternative option if you want to create more space around the button */
+.text-button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+    width: 100%;
+}
+
+/* Responsive Media Queries */
 @media (max-width: 768px) {
+    .nav-links li {
+        margin-left: 10px;
+    }
+    .container {
+        width: 95%;
+        margin-bottom: 20px;
+    }
     .dashboard-grid {
         grid-template-columns: 1fr;
     }
-    
-    .editable-nutrition {
-        flex-direction: column;
-    }
-    
-    .nutrition-input-group {
-        width: 100%;
-        margin-right: 0;
-    }
-}
-
-/* Nutrition card styles */
-.nutrition-card {
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    padding: 20px;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-}
-
-.nutrition-card .food-name {
-    margin-top: 0;
-    color: #2c3e50;
-    border-bottom: 2px solid #3498db;
-    padding-bottom: 8px;
-}
-
-.nutrition-card .portion-size {
-    color: #7f8c8d;
-    font-style: italic;
-    margin-bottom: 15px;
-}
-
-.calories-section {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #f8f9fa;
-    padding: 10px 15px;
-    border-radius: 6px;
-    margin-bottom: 20px;
-}
-
-.nutrition-label {
-    font-weight: bold;
-    color: #2c3e50;
-}
-
-.nutrition-value {
-    font-weight: bold;
-    font-size: 1.2em;
-    color: #e74c3c;
-}
-
-.macro-section {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-    margin-bottom: 20px;
-}
-
-.macro-item {
-    flex: 1;
-    min-width: 100px;
-    background-color: #f8f9fa;
-    padding: 10px;
-    border-radius: 6px;
-    text-align: center;
-}
-
-.macro-label {
-    font-weight: bold;
-    margin-bottom: 5px;
-    color: #2c3e50;
-}
-
-.macro-value {
-    font-size: 1.1em;
-    color: #2980b9;
-}
-
-.micronutrient-section {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 10px;
-    margin-bottom: 20px;
-}
-
-.micro-item {
-    background-color: #f8f9fa;
-    padding: 8px 12px;
-    border-radius: 4px;
-}
-
-.micro-label {
-    font-size: 0.9em;
-    color: #7f8c8d;
-}
-
-.micro-value {
-    font-weight: bold;
-    color: #16a085;
-}
-
-.allergens-section {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-}
-
-.allergen-item {
-    background-color: #ffecb3;
-    color: #f39c12;
-    padding: 5px 10px;
-    border-radius: 4px;
-    font-size: 0.9em;
-    border-left: 3px solid #f39c12;
-}
-
-/* Add h3 styling */
-.nutrition-card h3 {
-    margin-top: 20px;
-    margin-bottom: 10px;
-    color: #34495e;
-    font-size: 1.1em;
 }
