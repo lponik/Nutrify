@@ -1,36 +1,82 @@
+nutrient-tracker/frontend/templates/dashboard.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-    <title>User Dashboard</title>
+    <title>Dashboard - Nutrient Tracker</title>
 </head>
 <body>
-    <header>
-        <h1>Nutrient Tracker Dashboard</h1>
-        <nav>
-            <ul>
-                <li><a href="{{ url_for('auth.login') }}">Login</a></li>
-                <li><a href="{{ url_for('auth.register') }}">Register</a></li>
-                <li><a href="{{ url_for('food.capture') }}">Capture Food</a></li>
-                <li><a href="{{ url_for('tracking.view') }}">Track Nutrients</a></li>
+    <nav class="main-nav">
+        <div class="nav-container">
+            <div class="logo">Nutrient Tracker</div>
+            <ul class="nav-links">
+                <li><a href="{{ url_for('food_routes.index') }}">Analyzer</a></li>
+                <li><a href="{{ url_for('food_routes.dashboard') }}" class="active">Dashboard</a></li>
+                <li><a href="{{ url_for('food_routes.account') }}">Account</a></li>
             </ul>
-        </nav>
-    </header>
-    <main>
-        <section id="user-goals">
-            <h2>Your Nutrient Goals</h2>
-            <!-- User goals will be dynamically inserted here -->
-        </section>
-        <section id="nutrient-intake">
-            <h2>Your Nutrient Intake</h2>
-            <!-- Nutrient intake data will be dynamically inserted here -->
-        </section>
-    </main>
-    <footer>
-        <p>&copy; 2023 Nutrient Tracker. All rights reserved.</p>
-    </footer>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>Your Dashboard</h1>
+        
+        <div class="dashboard-date">
+            <input type="date" id="dashboard-date" value="{{ today }}">
+        </div>
+        
+        <div class="dashboard-grid">
+            <div class="dashboard-card">
+                <h2>Calorie Intake</h2>
+                <div class="progress-container">
+                    <div class="progress-bar" id="calories-progress"></div>
+                </div>
+                <div class="progress-text">
+                    <span id="calories-current">0</span> / <span id="calories-goal">2000</span> kcal
+                </div>
+            </div>
+            
+            <div class="dashboard-card">
+                <h2>Protein</h2>
+                <div class="progress-container">
+                    <div class="progress-bar" id="protein-progress"></div>
+                </div>
+                <div class="progress-text">
+                    <span id="protein-current">0</span> / <span id="protein-goal">50</span> g
+                </div>
+            </div>
+            
+            <div class="dashboard-card">
+                <h2>Carbs</h2>
+                <div class="progress-container">
+                    <div class="progress-bar" id="carbs-progress"></div>
+                </div>
+                <div class="progress-text">
+                    <span id="carbs-current">0</span> / <span id="carbs-goal">300</span> g
+                </div>
+            </div>
+            
+            <div class="dashboard-card">
+                <h2>Fat</h2>
+                <div class="progress-container">
+                    <div class="progress-bar" id="fat-progress"></div>
+                </div>
+                <div class="progress-text">
+                    <span id="fat-current">0</span> / <span id="fat-goal">70</span> g
+                </div>
+            </div>
+        </div>
+        
+        <div class="food-log-section">
+            <h2>Today's Food Log</h2>
+            <div id="dashboard-food-log">
+                <!-- Food log entries will be inserted here -->
+                <p class="empty-message">No food entries found for today.</p>
+            </div>
+        </div>
+    </div>
+
     <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
 </body>
 </html>
