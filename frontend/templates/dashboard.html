@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <title>User Dashboard</title>
+</head>
+<body>
+    <header>
+        <h1>Nutrient Tracker Dashboard</h1>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('auth.login') }}">Login</a></li>
+                <li><a href="{{ url_for('auth.register') }}">Register</a></li>
+                <li><a href="{{ url_for('food.capture') }}">Capture Food</a></li>
+                <li><a href="{{ url_for('tracking.view') }}">Track Nutrients</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section id="user-goals">
+            <h2>Your Nutrient Goals</h2>
+            <!-- User goals will be dynamically inserted here -->
+        </section>
+        <section id="nutrient-intake">
+            <h2>Your Nutrient Intake</h2>
+            <!-- Nutrient intake data will be dynamically inserted here -->
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2023 Nutrient Tracker. All rights reserved.</p>
+    </footer>
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+</body>
+</html>

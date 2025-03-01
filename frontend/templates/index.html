@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nutrient Tracker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Welcome to the Nutrient Tracker</h1>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('login') }}">Login</a></li>
+                <li><a href="{{ url_for('register') }}">Register</a></li>
+                <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <h2>Your Journey to Better Nutrition Starts Here!</h2>
+            <p>Track your nutrients and achieve your health goals with our easy-to-use platform.</p>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2023 Nutrient Tracker. All rights reserved.</p>
+    </footer>
+</body>
+</html>
