@@ -72,3 +72,42 @@ class GeminiService:
                 "success": False,
                 "error": str(e)
             }
+        
+    def analyze_food_image(self, image_file):
+        """Analyze an image of food and return nutritional information"""
+        try:
+            # Open the image file
+            img = Image.open(image_file)
+            
+            # Create prompt for nutritional analysis
+            prompt = """
+            Analyze this food image and provide detailed nutritional information in JSON format.
+            Include:
+            - Food name
+            - Portion size (estimated)
+            - Calories
+            - Macronutrients (protein, carbs, fat)
+            - Key vitamins and minerals
+            - Any potential allergens
+            
+            Format the response as valid JSON only with no other text.
+            """
+            
+            # Use vision-capable model
+            vision_model = genai.GenerativeModel('models/gemini-1.5-pro')
+            
+            # Generate response
+            response = vision_model.generate_content([prompt, img])
+            
+            # Extract response text
+            response_text = response.text
+            
+            return {
+                "success": True,
+                "data": response_text
+            }
+        except Exception as e:
+            return {
+                "success": False,
+                "error": str(e)
+            }

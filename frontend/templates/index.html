@@ -1,21 +1,37 @@
-ent-tracker/frontend/templates/index.html -->
+/index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nutrient Tracker</title>
+    <title>Nutrient Analyzer</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
 </head>
 <body>
     <div class="container">
         <h1>Nutrient Analyzer</h1>
         
-        <div class="analysis-section">
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="text">Text Description</button>
+            <button class="tab-btn" data-tab="image">Image Upload</button>
+        </div>
+        
+        <div class="analysis-section tab-content active" id="text-tab">
             <h2>Describe Your Food</h2>
             <div class="text-input">
                 <textarea id="food-description" placeholder="Describe the food you want to analyze (e.g., 'grilled chicken breast with steamed broccoli')"></textarea>
-                <button id="analyze-btn">Analyze</button>
+                <button id="analyze-text-btn">Analyze Text</button>
+            </div>
+        </div>
+        
+        <div class="analysis-section tab-content" id="image-tab">
+            <h2>Upload Food Image</h2>
+            <div class="image-input">
+                <input type="file" id="food-image" accept="image/*">
+                <div class="preview-container">
+                    <img id="image-preview" src="#" alt="Preview" style="display: none; max-width: 100%; max-height: 300px;">
+                </div>
+                <button id="analyze-image-btn">Analyze Image</button>
             </div>
         </div>
         
