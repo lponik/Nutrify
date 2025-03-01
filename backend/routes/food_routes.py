@@ -70,3 +70,22 @@ def analyze_image():
 def capture():
     """Render the food capture page with camera functionality"""
     return render_template('food_capture.html')
+
+from datetime import datetime
+
+@food_routes.route('/')
+def index():
+    """Render the main food analyzer page"""
+    return render_template('index.html')
+
+@food_routes.route('/dashboard')
+def dashboard():
+    """Render the user dashboard page"""
+    today = datetime.now().strftime('%Y-%m-%d')
+    return render_template('dashboard.html', today=today)
+
+@food_routes.route('/account')
+def account():
+    """Render the user account page"""
+    today = datetime.now().strftime('%Y-%m-%d')
+    return render_template('account.html', today=today)
