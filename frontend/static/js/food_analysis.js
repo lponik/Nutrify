@@ -256,20 +256,33 @@ document.addEventListener('DOMContentLoaded', function() {
             const data = await response.json();
             
             if (data.success) {
-                // Format JSON response for better readability
                 try {
-                    const parsedData = JSON.parse(data.data);
-                    const formattedData = JSON.stringify(parsedData, null, 2);
-                    results.innerHTML = '<pre>' + formattedData + '</pre>';
+                    // Clean up the response - remove markdown formatting
+                    let cleanJson = data.data;
                     
-                    // Store the current analysis for saving
+                    // Remove markdown code blocks if present
+                    if (cleanJson.includes('```')) {
+                        cleanJson = cleanJson.replace(/```json|```/g, '').trim();
+                    }
+                    
+                    console.log("Cleaned JSON:", cleanJson);
+                    
+                    // Parse the data from Gemini
+                    const parsedData = JSON.parse(cleanJson);
+                    
+                    // Store the raw data for saving to food log
                     localStorage.setItem('currentFoodAnalysis', JSON.stringify(parsedData));
+                    
+                    // Use our formatting function instead of showing raw JSON
+                    const formattedHTML = formatNutritionData(parsedData);
+                    results.innerHTML = formattedHTML;
                     
                     // Show save button
                     saveResultBtn.style.display = 'block';
                 } catch (e) {
                     // If parsing fails, just show the raw response
                     results.textContent = data.data;
+                    console.error("Error formatting data:", e);
                 }
             } else {
                 showError(data.error || 'Failed to analyze food');
@@ -279,5 +292,140 @@ document.addEventListener('DOMContentLoaded', function() {
         } finally {
             loading.style.display = 'none';
         }
+    }
+    
+    function formatNutritionData(data) {
+        // Extract values (with fallbacks)
+        const foodName = data.food_name || data.name || 'Unknown Food';
+        const portionSize = data.portion_size || data.portionSize || 'Standard serving';
+        const calories = data.calories || '0';
+        
+        // Handle nested macronutrients
+        let protein = '0g';
+        let carbs = '0g';
+        let fat = '0g';
+        let fiber = '0g';
+        
+        if (data.macronutrients) {
+            protein = data.macronutrients.protein + 'g' || '0g';
+            
+            // Handle nested carbs
+            if (typeof data.macronutrients.carbohydrates === 'object') {
+                carbs = data.macronutrients.carbohydrates.total + 'g' || '0g';
+                fiber = data.macronutrients.carbohydrates.fiber ? data.macronutrients.carbohydrates.fiber + 'g' : '0g';
+            } else {
+                carbs = data.macronutrients.carbohydrates + 'g' || '0g';
+            }
+            
+            fat = data.macronutrients.fat + 'g' || '0g';
+        } else {
+            // Fallback to flat structure
+            protein = data.protein ? data.protein + 'g' : '0g';
+            carbs = data.carbohydrates ? data.carbohydrates + 'g' : '0g';
+            fat = data.fat || data.fats ? (data.fat || data.fats) + 'g' : '0g';
+            fiber = data.fiber ? data.fiber + 'g' : '0g';
+        }
+        
+        // Vitamins and minerals are combined in the JSON
+        const micronutrients = data.vitamins_and_minerals || {};
+        
+        // Potential allergens
+        const allergens = data.potential_allergens || data.allergens || [];
+        
+        // Start building the HTML
+        let html = `
+            <div class="nutrition-card">
+                <h2 class="food-name">${foodName}</h2>
+                <div class="portion-size">${portionSize}</div>
+                
+                <div class="calories-section">
+                    <div class="nutrition-label">Calories:</div>
+                    <div class="nutrition-value">${calories}</div>
+                </div>
+                
+                <h3>Macronutrients</h3>
+                <div class="macro-section">
+                    <div class="macro-item">
+                        <div class="macro-label">Protein</div>
+                        <div class="macro-value">${protein}</div>
+                    </div>
+                    <div class="macro-item">
+                        <div class="macro-label">Carbohydrates</div>
+                        <div class="macro-value">${carbs}</div>
+                    </div>
+                    <div class="macro-item">
+                        <div class="macro-label">Fat</div>
+                        <div class="macro-value">${fat}</div>
+                    </div>
+        `;
+        
+        // Add fiber if available
+        if (fiber !== '0g') {
+            html += `
+                <div class="macro-item">
+                    <div class="macro-label">Fiber</div>
+                    <div class="macro-value">${fiber}</div>
+                </div>
+            `;
+        }
+        
+        html += `</div>`;
+        
+        // Add micronutrients if available
+        if (Object.keys(micronutrients).length > 0) {
+            html += `<h3>Vitamins & Minerals</h3><div class="micronutrient-section">`;
+            
+            for (const [nutrient, value] of Object.entries(micronutrients)) {
+                html += `
+                    <div class="micro-item">
+                        <div class="micro-label">${formatNutrientName(nutrient)}</div>
+                        <div class="micro-value">${value}${getMicroUnit(nutrient)}</div>
+                    </div>
+                `;
+            }
+            
+            html += `</div>`;
+        }
+        
+        // Add allergens if available
+        if (allergens && allergens.length > 0) {
+            html += `<h3>Potential Allergens</h3><div class="allergens-section">`;
+            
+            if (typeof allergens === 'string') {
+                // Handle case where allergens is a string
+                html += `<div class="allergen-item">${allergens}</div>`;
+            } else {
+                // Handle case where allergens is an array
+                allergens.forEach(allergen => {
+                    html += `<div class="allergen-item">${allergen}</div>`;
+                });
+            }
+            
+            html += `</div>`;
+        }
+        
+        html += `</div>`;
+        
+        return html;
+    }
+    
+    function formatNutrientName(name) {
+        // Convert vitamin_c to Vitamin C
+        return name
+            .split('_')
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(' ');
+    }
+    
+    function getMicroUnit(nutrient) {
+        // Add appropriate units to micronutrients
+        if (nutrient.includes('vitamin')) {
+            return ' mg';
+        } else if (nutrient.includes('potassium') || nutrient.includes('sodium') || nutrient.includes('calcium')) {
+            return ' mg';
+        } else if (nutrient.includes('iron') || nutrient.includes('zinc') || nutrient.includes('manganese')) {
+            return ' mg';
+        }
+        return '';
     }
 });
