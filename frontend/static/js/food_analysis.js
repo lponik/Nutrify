@@ -234,10 +234,19 @@ document.addEventListener('DOMContentLoaded', function() {
     const loading = document.getElementById('loading');
     
     function showLoading() {
-        loading.style.display = 'block';
-        resultsContainer.style.display = 'block';
-        results.textContent = '';
-        saveResultBtn.style.display = 'none';
+        // Get references to the elements
+        const resultsContainer = document.getElementById('results-container');
+        const loading = document.getElementById('loading');
+        const results = document.getElementById('results');
+        const saveResultBtn = document.getElementById('save-result-btn');
+        
+        // Show the results container and loading spinner
+        if (resultsContainer) resultsContainer.style.display = 'block';
+        if (loading) loading.style.display = 'flex'; // Change to flex to center spinner
+        if (results) results.innerHTML = '';
+        if (saveResultBtn) saveResultBtn.style.display = 'none';
+        
+        console.log("Loading spinner shown");
     }
     
     function showError(message) {
@@ -290,7 +299,9 @@ document.addEventListener('DOMContentLoaded', function() {
         } catch (error) {
             showError(`Failed to process response: ${error.message}`);
         } finally {
-            loading.style.display = 'none';
+            // Make sure to hide the loading spinner when done, whether success or error
+            const loading = document.getElementById('loading');
+            if (loading) loading.style.display = 'none';
         }
     }
     
@@ -335,7 +346,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Start building the HTML
         let html = `
             <div class="nutrition-card">
-                <h2 class="food-name">${foodName}</h2>
+                <h3 class="food-name">${foodName}</h3>
                 <div class="portion-size">${portionSize}</div>
                 
                 <div class="calories-section">
