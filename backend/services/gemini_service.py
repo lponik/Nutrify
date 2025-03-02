@@ -135,6 +135,7 @@ class GeminiService:
             - vitamins_and_minerals: Include key vitamins (A, B complex, C, D, E, K) and minerals 
               (calcium, iron, magnesium, phosphorus, potassium, sodium, zinc) as individual key-value pairs.
             - potential_allergens (array of strings)
+            - health_assessment: A brief assessment (1-2 sentences) of how healthy this food choice is and why (string)
             
             Format as VALID JSON with the following exact structure:
             {
@@ -152,7 +153,8 @@ class GeminiService:
                 "iron": "string",
                 ... (other vitamins/minerals)
               },
-              "potential_allergens": ["string", "string", ...]
+              "potential_allergens": ["string", "string", ...],
+              "health_assessment": "string"
             }
             
             Use null for unknown values, never use placeholder values.
