@@ -3,6 +3,8 @@ import base64
 import google.generativeai as genai
 from PIL import Image
 from io import BytesIO
+import json
+import re
 
 class GeminiService:
     def __init__(self, api_key=None):
@@ -27,30 +29,42 @@ class GeminiService:
             return False
             
     def analyze_food_text(self, food_description):
-        """
-        Analyze a text description of food and return nutritional information
-        
-        Args:
-            food_description: Text description of food
-        
-        Returns:
-            dict: Nutritional information extracted from the description
-        """
+        """Analyze a text description of food and return nutritional information"""
         try:
-            # Create a prompt that asks for nutritional analysis
+            # Create a prompt that asks for nutritional analysis with explicitly structured vitamins/minerals
             prompt = f"""
             Based on this food description: "{food_description}"
             
             Provide detailed nutritional information in JSON format.
             Include:
-            - Food name
-            - Portion size (standard)
-            - Calories
-            - Macronutrients (protein, carbs, fat)
-            - Key vitamins and minerals
-            - Any potential allergens
+            - Food name (string)
+            - Portion size (string)
+            - Calories (number)
+            - Macronutrients: protein (string with g unit), carbs (string with g unit), fat (string with g unit)
+            - vitamins_and_minerals: Please include key vitamins (A, B1, B2, B3, B5, B6, B9, B12, C, D, E, K) and minerals 
+              (calcium, iron, magnesium, phosphorus, potassium, sodium, zinc) as individual key-value pairs with their amounts and units.
+            - potential_allergens (array of strings)
             
-            Format the response as valid JSON only with no other text.
+            Format as VALID JSON with the following exact structure:
+            {{
+              "food_name": "string",
+              "portion_size": "string",
+              "calories": number,
+              "protein": "string",
+              "carbohydrates": "string",
+              "fat": "string",
+              "fiber": "string",
+              "vitamins_and_minerals": {{
+                "vitamin_a": "string",
+                "vitamin_c": "string",
+                "calcium": "string",
+                "iron": "string",
+                ... (other vitamins/minerals)
+              }},
+              "potential_allergens": ["string", "string", ...]
+            }}
+            
+            Use null for unknown values, never use placeholder values.
             """
             
             # Use text-only model for this request
@@ -62,11 +76,41 @@ class GeminiService:
             # Extract the response text
             response_text = response.text
             
-            return {
-                "success": True,
-                "data": response_text
-            }
+            # Clean up the response to extract only valid JSON
+            # Remove markdown code blocks if present
+            clean_text = re.sub(r'```(?:json)?\s*(.*?)\s*```', r'\1', response_text, flags=re.DOTALL)
             
+            # Find the first occurrence of '{' and the last occurrence of '}'
+            start_idx = clean_text.find('{')
+            end_idx = clean_text.rfind('}')
+            
+            if start_idx != -1 and end_idx != -1:
+                json_text = clean_text[start_idx:end_idx+1]
+                
+                # Replace any remaining {object} placeholders with null
+                json_text = re.sub(r'\{\s*object\s*\}', 'null', json_text)
+                
+                # Add additional cleaning for object notation
+                json_text = re.sub(r'\[object Object\]', 'null', json_text)
+                
+                # Parse JSON to validate it
+                parsed_data = json.loads(json_text)
+                
+                return {
+                    "success": True,
+                    "data": json_text
+                }
+            else:
+                return {
+                    "success": False,
+                    "error": "Could not extract valid JSON from response"
+                }
+                
+        except json.JSONDecodeError as e:
+            return {
+                "success": False,
+                "error": f"JSON parsing error: {str(e)}"
+            }
         except Exception as e:
             return {
                 "success": False,
@@ -79,18 +123,38 @@ class GeminiService:
             # Open the image file
             img = Image.open(image_file)
             
-            # Create prompt for nutritional analysis
+            # Create prompt with explicit structure for vitamins and minerals
             prompt = """
             Analyze this food image and provide detailed nutritional information in JSON format.
             Include:
-            - Food name
-            - Portion size (estimated)
-            - Calories
-            - Macronutrients (protein, carbs, fat)
-            - Key vitamins and minerals
-            - Any potential allergens
+            - Food name (string)
+            - Portion size (string)
+            - Calories (number)
+            - Macronutrients: protein, carbs, fat (all as strings with units)
+            - vitamins_and_minerals: Include key vitamins (A, B complex, C, D, E, K) and minerals 
+              (calcium, iron, magnesium, phosphorus, potassium, sodium, zinc) as individual key-value pairs.
+            - potential_allergens (array of strings)
             
-            Format the response as valid JSON only with no other text.
+            Format as VALID JSON with the following exact structure:
+            {
+              "food_name": "string",
+              "portion_size": "string",
+              "calories": number,
+              "protein": "string",
+              "carbohydrates": "string",
+              "fat": "string",
+              "fiber": "string",
+              "vitamins_and_minerals": {
+                "vitamin_a": "string",
+                "vitamin_c": "string",
+                "calcium": "string",
+                "iron": "string",
+                ... (other vitamins/minerals)
+              },
+              "potential_allergens": ["string", "string", ...]
+            }
+            
+            Use null for unknown values, never use placeholder values.
             """
             
             # Use vision-capable model
@@ -102,9 +166,37 @@ class GeminiService:
             # Extract response text
             response_text = response.text
             
+            # Clean up the response to extract only valid JSON
+            # Remove markdown code blocks if present
+            clean_text = re.sub(r'```(?:json)?\s*(.*?)\s*```', r'\1', response_text, flags=re.DOTALL)
+            
+            # Find the first occurrence of '{' and the last occurrence of '}'
+            start_idx = clean_text.find('{')
+            end_idx = clean_text.rfind('}')
+            
+            if start_idx != -1 and end_idx != -1:
+                json_text = clean_text[start_idx:end_idx+1]
+                
+                # Replace any remaining {object} placeholders with null
+                json_text = re.sub(r'\{\s*object\s*\}', 'null', json_text)
+                
+                # Parse JSON to validate it
+                parsed_data = json.loads(json_text)
+                
+                return {
+                    "success": True,
+                    "data": json_text
+                }
+            else:
+                return {
+                    "success": False,
+                    "error": "Could not extract valid JSON from response"
+                }
+                
+        except json.JSONDecodeError as e:
             return {
-                "success": True,
-                "data": response_text
+                "success": False,
+                "error": f"JSON parsing error: {str(e)}"
             }
         except Exception as e:
             return {
