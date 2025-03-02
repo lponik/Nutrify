@@ -1547,3 +1547,49 @@ button:active, .btn:active {
     margin-top: 15px;
 }
 
+/* Health Assessment Section */
+.health-assessment-section {
+    margin-top: 20px;
+    padding: 15px;
+    border-top: 1px solid #eaeaea;
+    animation: fadeInUp 1s ease-out 2.5s both;
+}
+
+.health-assessment-section h3 {
+    color: #2c3e50;
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+.health-assessment-content {
+    padding: 12px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    border-left: 4px solid #27ae60;
+}
+
+.health-assessment-content p {
+    margin: 0;
+    line-height: 1.5;
+    color: #333;
+    font-style: italic;
+}
+
+
+.health-assessment-content p {
+    margin: 0;
+    line-height: 1.5;
+    color: #2c3e50;       /* Changed to match h3 color */
+    font-size: 1.2rem;    /* Match h3 font size */
+    font-weight: 500;     /* Add some weight but not as bold as headers */
+    font-style: normal;   /* Remove italic */
+}
+
+/* Optional: Make the section more prominent */
+.health-assessment-content {
+    padding: 15px;        /* Slightly increased padding */
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    border-left: 4px solid #27ae60;
+    margin-top: 5px;      /* Add space from heading */
+}

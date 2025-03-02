@@ -31,7 +31,7 @@ class GeminiService:
     def analyze_food_text(self, food_description):
         """Analyze a text description of food and return nutritional information"""
         try:
-            # Create a prompt that asks for nutritional analysis with explicitly structured vitamins/minerals
+            # Create a prompt that asks for nutritional analysis with health assessment
             prompt = f"""
             Based on this food description: "{food_description}"
             
@@ -41,9 +41,9 @@ class GeminiService:
             - Portion size (string)
             - Calories (number)
             - Macronutrients: protein (string with g unit), carbs (string with g unit), fat (string with g unit)
-            - vitamins_and_minerals: Please include key vitamins (A, B1, B2, B3, B5, B6, B9, B12, C, D, E, K) and minerals 
-              (calcium, iron, magnesium, phosphorus, potassium, sodium, zinc) as individual key-value pairs with their amounts and units.
+            - vitamins_and_minerals: Please include key vitamins (A, C, D, etc.) and minerals (calcium, iron, etc.) with their amounts and units
             - potential_allergens (array of strings)
+            - health_assessment: A brief assessment (1-2 sentences) of how healthy this food choice is and why (string)
             
             Format as VALID JSON with the following exact structure:
             {{
@@ -61,7 +61,8 @@ class GeminiService:
                 "iron": "string",
                 ... (other vitamins/minerals)
               }},
-              "potential_allergens": ["string", "string", ...]
+              "potential_allergens": ["string", "string", ...],
+              "health_assessment": "string"
             }}
             
             Use null for unknown values, never use placeholder values.
