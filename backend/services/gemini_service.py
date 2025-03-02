@@ -124,44 +124,52 @@ class GeminiService:
             # Open the image file
             img = Image.open(image_file)
             
-            # Create prompt with explicit structure for vitamins and minerals
+            # Create a more direct prompt with stronger guidance
             prompt = """
-            Analyze this food image and provide detailed nutritional information in JSON format.
-            Include:
-            - Food name (string)
-            - Portion size (string)
-            - Calories (number)
-            - Macronutrients: protein, carbs, fat (all as strings with units)
-            - vitamins_and_minerals: Include key vitamins (A, B complex, C, D, E, K) and minerals 
-              (calcium, iron, magnesium, phosphorus, potassium, sodium, zinc) as individual key-value pairs.
-            - potential_allergens (array of strings)
-            - health_assessment: A brief assessment (1-2 sentences) of how healthy this food choice is and why (string)
+            You are a nutritional analysis expert. First identify what food is in this image, then provide realistic nutritional data based on standard nutritional databases.
+
+            Even if you're unsure about exact values, provide reasonable estimates based on standard nutrition data for the identified food.
             
-            Format as VALID JSON with the following exact structure:
+            Include:
+            - Food name: Be specific about what you see
+            - Portion size: Provide a reasonable estimate (e.g., "1 cup", "3 oz")
+            - Calories: Provide a numeric estimate based on standard nutrition data
+            - Macronutrients: Include reasonable estimates for protein, carbs, and fat with units
+            - Vitamins & minerals: Include at least 3-5 key nutrients typically found in this food
+            - Potential allergens: List common allergens in this food
+            - Health assessment: Provide a brief assessment of nutritional benefits/concerns
+            
+            Format as VALID JSON with the following structure:
             {
-              "food_name": "string",
-              "portion_size": "string",
-              "calories": number,
-              "protein": "string",
-              "carbohydrates": "string",
-              "fat": "string",
-              "fiber": "string",
+              "food_name": "Specific Food Name",
+              "portion_size": "Estimated Portion",
+              "calories": 150,
+              "protein": "10g",
+              "carbohydrates": "15g",
+              "fat": "5g",
+              "fiber": "2g",
               "vitamins_and_minerals": {
-                "vitamin_a": "string",
-                "vitamin_c": "string",
-                "calcium": "string",
-                "iron": "string",
-                ... (other vitamins/minerals)
+                "vitamin_a": "100 IU",
+                "vitamin_c": "5 mg",
+                "calcium": "20 mg",
+                "iron": "1.5 mg",
+                "potassium": "200 mg"
               },
-              "potential_allergens": ["string", "string", ...],
-              "health_assessment": "string"
+              "potential_allergens": ["allergen1", "allergen2"],
+              "health_assessment": "Nutritional assessment of this food"
             }
             
-            Use null for unknown values, never use placeholder values.
+            Ensure all nutritional values are realistic estimates based on food databases, not zeros or nulls.
             """
             
-            # Use vision-capable model
-            vision_model = genai.GenerativeModel('models/gemini-1.5-pro')
+            # Use vision-capable model with adjusted parameters
+            vision_model = genai.GenerativeModel('models/gemini-1.5-pro',
+                                               generation_config={
+                                                   "temperature": 0.2,  # Lower temperature for more factual outputs
+                                                   "top_p": 0.95,
+                                                   "top_k": 40,
+                                                   "max_output_tokens": 4096,  # Allow longer responses
+                                               })
             
             # Generate response
             response = vision_model.generate_content([prompt, img])
