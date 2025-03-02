@@ -331,10 +331,18 @@ document.addEventListener('DOMContentLoaded', function() {
             fat = data.macronutrients.fat + 'g' || '0g';
         } else {
             // Fallback to flat structure
-            protein = data.protein ? data.protein + 'g' : '0g';
-            carbs = data.carbohydrates ? data.carbohydrates + 'g' : '0g';
-            fat = data.fat || data.fats ? (data.fat || data.fats) + 'g' : '0g';
-            fiber = data.fiber ? data.fiber + 'g' : '0g';
+            protein = data.protein ? 
+                (data.protein.toString().endsWith('g') ? data.protein : data.protein + 'g') : 
+                '0g';
+            carbs = data.carbohydrates ? 
+                (data.carbohydrates.toString().endsWith('g') ? data.carbohydrates : data.carbohydrates + 'g') : 
+                '0g';
+            fat = data.fat || data.fats ? 
+                ((data.fat || data.fats).toString().endsWith('g') ? (data.fat || data.fats) : (data.fat || data.fats) + 'g') : 
+                '0g';
+            fiber = data.fiber ? 
+                (data.fiber.toString().endsWith('g') ? data.fiber : data.fiber + 'g') : 
+                '0g';
         }
         
         // Vitamins and minerals are combined in the JSON
@@ -412,6 +420,19 @@ document.addEventListener('DOMContentLoaded', function() {
             
             html += `</div>`;
         }
+        
+        // Check if we have a health assessment
+        const healthAssessment = data.health_assessment || "No health assessment available.";
+
+        // Add health assessment section to your html variable
+        html += `
+            <div class="health-assessment-section">
+                <h3>Health Assessment</h3>
+                <div class="health-assessment-content">
+                    <p>${healthAssessment}</p>
+                </div>
+            </div>
+        `;
         
         html += `</div>`;
         
