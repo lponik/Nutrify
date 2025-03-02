@@ -147,6 +147,12 @@ h1 {
     font-weight: 600;
 }
 
+.container h1 {
+    font-size: 1.5rem;  
+    margin-top: 0;
+    text-align: center;
+}
+
 h2, h3 {
     color: #3498db;
     
@@ -726,18 +732,22 @@ button:active, .btn:active {
 /* Food Name & Portion Size */
 .nutrition-card .food-name {
     margin-top: 0;
-    font-size: 1.6rem;
+    font-size: 4rem;
     font-weight: 600;
-    color: #333;/* Reduced from larger value */
+    color: #333;
     text-align: center;
-    margin-bottom: 10px !important; /* Reduced from default h1 margin */
+    margin-bottom: 0; /* Remove bottom margin */
+    line-height: 1.1; /* Tighter line height */
 }
 
 .nutrition-card .portion-size {
     font-style: italic;
     color: #777;
     text-align: center;
-    margin-bottom: 5px !important;
+    margin-top: 0; /* Remove top margin */
+    margin-bottom: 15px; /* Add space below instead */
+    line-height: 1.2; /* Tighter line height */
+    padding: 0; /* Remove any padding */
 }
 
 /* Calories Section */
@@ -752,6 +762,7 @@ button:active, .btn:active {
     justify-content: center;
     align-items: center;
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    margin-top: 0; /* Remove top margin */
 }
 
 .container {
@@ -1030,7 +1041,7 @@ button:active, .btn:active {
     margin-top: 0;
     margin-bottom: 10px; /* Reduced from larger value */
     color: #3498db;
-    font-size: 1.2rem;
+    font-size: 2.5rem;
     font-weight: 600;
     display: block;
     text-align: center;
@@ -1074,7 +1085,7 @@ button:active, .btn:active {
 .logo-text-large {
     font-family: 'Poppins', sans-serif;
     font-weight: 600;
-    font-size: 2.5rem;
+    font-size: 3.5rem;
     color: #28a579;
     margin-left: 15px;
 }
@@ -1267,8 +1278,13 @@ button:active, .btn:active {
 
 /* Portion size animation */
 .nutrition-card .portion-size {
-    animation: fadeIn 0.5s ease-out 0.5s both;
-    opacity: 0;
+    font-style: italic;
+    color: #777;
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 5px; /* Reduced gap */
+    line-height: 1.2;
+    padding: 0;
 }
 
 @keyframes fadeIn {
@@ -1408,7 +1424,25 @@ button:active, .btn:active {
 /* Interactive hover effects for result items */
 .nutrition-card .macro-item:hover,
 .nutrition-card .micro-item:hover {
-    animation: wobble 0.8s ease-in-out;
+    transform: scale(1.08);
+    z-index: 10; /* Ensure hovered item stays on top */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    background-color: #fafafa; /* Slightly lighter background */
+}
+
+.nutrition-card .allergen-item:hover {
+    transform: scale(1.08);
+    box-shadow: 0 4px 10px rgba(243, 156, 18, 0.3);
+}
+
+.nutrition-card .macro-item,
+.nutrition-card .micro-item,
+.nutrition-card .allergen-item {
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+                box-shadow 0.3s ease,
+                background-color 0.3s ease;
+    will-change: transform; /* Optimize for animation performance */
+    backface-visibility: hidden; /* Prevents flickering in some browsers */
 }
 
 @keyframes wobble {
