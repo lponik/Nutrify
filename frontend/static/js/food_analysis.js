@@ -348,13 +348,11 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="nutrition-card">
                 <h3 class="food-name">${foodName}</h3>
                 <div class="portion-size">${portionSize}</div>
-                
-                <div class="calories-section">
+                <h3>Macronutrients</h3>
+                                <div class="calories-section">
                     <div class="nutrition-label">Calories:</div>
                     <div class="nutrition-value">${calories}</div>
                 </div>
-                
-                <h3>Macronutrients</h3>
                 <div class="macro-section">
                     <div class="macro-item">
                         <div class="macro-label">Protein</div>
