@@ -1,8 +1,30 @@
+/**
+ * @file food_analysis.js
+ * @description Core module for Nutrify's food analysis functionality
+ * 
+ * This file manages all food analysis functionality including:
+ * - Text-based food description analysis
+ * - Camera capture and analysis of food images
+ * - Image upload and analysis
+ * - Results display and formatting
+ * - Food log storage
+ * 
+ * The module uses the Gemini API (via backend endpoints) to analyze
+ * food and retrieve nutritional information.
+ */
+
 document.addEventListener('DOMContentLoaded', function() {
-    // Tab switching functionality
+    /**
+     * TAB NAVIGATION SYSTEM
+     * Manages switching between different input methods (text, camera, image upload)
+     */
     const tabBtns = document.querySelectorAll('.tab-btn');
     const tabContents = document.querySelectorAll('.tab-content');
     
+    /**
+     * Event handler for tab button clicks
+     * Switches the active tab and initializes/stops camera as needed
+     */
     tabBtns.forEach(btn => {
         btn.addEventListener('click', () => {
             const tabId = btn.getAttribute('data-tab');
@@ -28,10 +50,17 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Text analysis
+    /**
+     * TEXT ANALYSIS
+     * Handles submission of text descriptions for food analysis
+     */
     const analyzeTextBtn = document.getElementById('analyze-text-btn');
     const foodDescription = document.getElementById('food-description');
     
+    /**
+     * Event handler for text analysis button
+     * Sends text description to backend API and processes response
+     */
     analyzeTextBtn.addEventListener('click', async function() {
         const text = foodDescription.value.trim();
         
@@ -57,7 +86,10 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // Camera functionality
+    /**
+     * CAMERA FUNCTIONALITY
+     * Manages device camera access, capture, and analysis
+     */
     const video = document.getElementById('video');
     const canvas = document.getElementById('canvas');
     const cameraPreview = document.getElementById('camera-preview');
@@ -66,11 +98,14 @@ document.addEventListener('DOMContentLoaded', function() {
     const retakeBtn = document.getElementById('retake-btn');
     const analyzeCameraBtn = document.getElementById('analyze-camera-btn');
     
-    let stream;
-    let facingMode = 'environment'; // Start with rear camera
-    let capturedImage = null;
+    let stream;                      // Holds the camera stream
+    let facingMode = 'environment';  // 'environment' for rear camera, 'user' for front
+    let capturedImage = null;        // Holds the captured image data URL
     
-    // Initialize camera
+    /**
+     * Initializes the device camera with specified facing mode
+     * @async
+     */
     async function initCamera() {
         try {
             if (stream) {
@@ -93,7 +128,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // Stop camera stream
+    /**
+     * Stops all video tracks in the camera stream and releases resources
+     */
     function stopCamera() {
         if (stream) {
             stream.getTracks().forEach(track => track.stop());
@@ -101,13 +138,19 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // Flip between front and rear cameras
+    /**
+     * Event handler for camera flip button
+     * Toggles between front and rear cameras
+     */
     flipCameraBtn.addEventListener('click', function() {
         facingMode = facingMode === 'user' ? 'environment' : 'user';
         initCamera();
     });
     
-    // Capture photo from camera
+    /**
+     * Event handler for capture button
+     * Captures current video frame and displays in preview
+     */
     captureBtn.addEventListener('click', function() {
         // Set canvas dimensions to match video
         canvas.width = video.videoWidth;
@@ -127,7 +170,10 @@ document.addEventListener('DOMContentLoaded', function() {
         document.querySelector('#camera-tab .preview-container').style.display = 'block';
     });
     
-    // Retake photo
+    /**
+     * Event handler for retake button
+     * Discards captured image and returns to camera view
+     */
     retakeBtn.addEventListener('click', function() {
         // Hide preview and show camera
         document.querySelector('#camera-tab .preview-container').style.display = 'none';
@@ -135,7 +181,11 @@ document.addEventListener('DOMContentLoaded', function() {
         capturedImage = null;
     });
     
-    // Analyze from camera
+    /**
+     * Event handler for analyze camera image button
+     * Sends captured image to backend API for analysis
+     * @async
+     */
     analyzeCameraBtn.addEventListener('click', async function() {
         if (!capturedImage) {
             alert('Please capture an image first');
@@ -163,12 +213,18 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // Image upload functionality
+    /**
+     * IMAGE UPLOAD FUNCTIONALITY
+     * Handles file selection, preview, and submission for analysis
+     */
     const foodImage = document.getElementById('food-image');
     const uploadPreview = document.getElementById('upload-preview');
     const analyzeUploadBtn = document.getElementById('analyze-upload-btn');
     
-    // Show image preview when file is selected
+    /**
+     * Event handler for file input change
+     * Shows preview of selected image
+     */
     foodImage.addEventListener('change', function() {
         if (this.files && this.files[0]) {
             const reader = new FileReader();
@@ -182,7 +238,11 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // Analyze from upload
+    /**
+     * Event handler for analyze upload button
+     * Sends selected image to backend API for analysis
+     * @async
+     */
     analyzeUploadBtn.addEventListener('click', async function() {
         if (!foodImage.files || !foodImage.files[0]) {
             alert('Please select an image to analyze.');
@@ -206,9 +266,16 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // Save to food log
+    /**
+     * FOOD LOG STORAGE
+     * Manages saving analyzed food data to the user's food log
+     */
     const saveResultBtn = document.getElementById('save-result-btn');
     
+    /**
+     * Event handler for save result button
+     * Adds current analysis to food log in localStorage with timestamp
+     */
     saveResultBtn.addEventListener('click', function() {
         const foodData = JSON.parse(localStorage.getItem('currentFoodAnalysis'));
         if (foodData) {
@@ -228,11 +295,17 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // Shared functions
+    /**
+     * SHARED UI FUNCTIONS
+     * Utility functions for loading states, errors, and response handling
+     */
     const resultsContainer = document.getElementById('results-container');
     const results = document.getElementById('results');
     const loading = document.getElementById('loading');
     
+    /**
+     * Shows loading spinner and prepares results container
+     */
     function showLoading() {
         // Get references to the elements
         const resultsContainer = document.getElementById('results-container');
@@ -249,11 +322,22 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log("Loading spinner shown");
     }
     
+    /**
+     * Displays error message in results container
+     * @param {string} message - Error message to display
+     */
     function showError(message) {
         results.textContent = `Error: ${message}`;
         loading.style.display = 'none';
     }
     
+    /**
+     * Processes API response from food analysis
+     * Parses JSON, stores data, and formats nutrition display
+     * 
+     * @async
+     * @param {Response} response - Fetch API response object
+     */
     async function handleAnalysisResponse(response) {
         try {
             // First check if the response is OK
@@ -305,6 +389,18 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
+    /**
+     * DATA FORMATTING
+     * Functions for formatting nutritional data for display
+     */
+    
+    /**
+     * Converts raw nutrition data JSON into formatted HTML
+     * Creates a nutrition card with sections for macros, micros, allergens
+     * 
+     * @param {Object} data - Nutritional data from API response
+     * @returns {string} HTML string for nutrition card display
+     */
     function formatNutritionData(data) {
         // Extract values (with fallbacks)
         const foodName = data.food_name || data.name || 'Unknown Food';
@@ -317,7 +413,9 @@ document.addEventListener('DOMContentLoaded', function() {
         let fat = '0g';
         let fiber = '0g';
         
+        // Handle different data structures returned by AI
         if (data.macronutrients) {
+            // Handle nested structure
             protein = data.macronutrients.protein + 'g' || '0g';
             
             // Handle nested carbs
@@ -330,7 +428,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             fat = data.macronutrients.fat + 'g' || '0g';
         } else {
-            // Fallback to flat structure
+            // Handle flat structure
             protein = data.protein ? 
                 (data.protein.toString().endsWith('g') ? data.protein : data.protein + 'g') : 
                 '0g';
@@ -351,7 +449,8 @@ document.addEventListener('DOMContentLoaded', function() {
         // Potential allergens
         const allergens = data.potential_allergens || data.allergens || [];
         
-        // Start building the HTML
+        // Build the HTML for nutrition card
+        // First the header and macronutrients
         let html = `
             <div class="nutrition-card">
                 <h3 class="food-name">${foodName}</h3>
@@ -388,7 +487,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         html += `</div>`;
         
-        // Add micronutrients if available
+        // Add micronutrients section if available
         if (Object.keys(micronutrients).length > 0) {
             html += `<h3>Vitamins & Minerals</h3><div class="micronutrient-section">`;
             
@@ -404,7 +503,7 @@ document.addEventListener('DOMContentLoaded', function() {
             html += `</div>`;
         }
         
-        // Add allergens if available
+        // Add allergens section if available
         if (allergens && allergens.length > 0) {
             html += `<h3>Potential Allergens</h3><div class="allergens-section">`;
             
@@ -421,10 +520,8 @@ document.addEventListener('DOMContentLoaded', function() {
             html += `</div>`;
         }
         
-        // Check if we have a health assessment
+        // Add health assessment section
         const healthAssessment = data.health_assessment || "No health assessment available.";
-
-        // Add health assessment section to your html variable
         html += `
             <div class="health-assessment-section">
                 <h3>Health Assessment</h3>
@@ -439,16 +536,27 @@ document.addEventListener('DOMContentLoaded', function() {
         return html;
     }
     
+    /**
+     * Formats nutrient names from snake_case to Title Case
+     * Example: "vitamin_c" becomes "Vitamin C"
+     * 
+     * @param {string} name - Nutrient name in snake_case format
+     * @returns {string} Formatted nutrient name
+     */
     function formatNutrientName(name) {
-        // Convert vitamin_c to Vitamin C
         return name
             .split('_')
             .map(word => word.charAt(0).toUpperCase() + word.slice(1))
             .join(' ');
     }
     
+    /**
+     * Adds appropriate units to micronutrient values based on nutrient type
+     * 
+     * @param {string} nutrient - Name of the nutrient
+     * @returns {string} Unit string to append (e.g., " mg", " IU")
+     */
     function getMicroUnit(nutrient) {
-        // Add appropriate units to micronutrients
         if (nutrient.includes('vitamin')) {
             return ' mg';
         } else if (nutrient.includes('potassium') || nutrient.includes('sodium') || nutrient.includes('calcium')) {
