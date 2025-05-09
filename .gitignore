@@ -1,4 +1,4 @@
-echo "*.pyc
+*.pyc
 __pycache__/
 *.py[cod]
 *$py.class
@@ -22,4 +22,6 @@ var/
 .env
 venv/
 ENV/
-.DS_Store" > .gitignore
+.DS_Store
+config.py
+backend/config.py
